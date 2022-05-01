@@ -11,8 +11,8 @@ function uriEscapePath(path: string): string {
 }
 
 // normalize / canonicalize path
-export function normalizePath(path: string, isUriEscapePath = false): string {
-  if (path === '') path = '/';
+export function normalizePath(path?: string, isUriEscapePath = false): string {
+  if (!path || path === '') path = '/';
 
   return isUriEscapePath ? uriEscapePath(path) : path;
 }
