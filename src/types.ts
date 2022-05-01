@@ -1,13 +1,13 @@
 import { OutgoingHttpHeaders } from 'http';
 
-interface BuilderSettings {
+export interface BuilderSettings {
   method: 'GET' | 'HEAD' | 'PUT' | 'POST' | 'PATCH' | 'DELETE' | string;
   url: string;
   body?: string;
   headers?: OutgoingHttpHeaders;
 }
 
-interface SignerOptions {
+export interface SignerOptions {
   unsignedHeaders?: string[];
   uriEscapePath?: boolean;
   applyChecksumHeader?: boolean;
