@@ -1,6 +1,6 @@
 {
   "name": "@izikaj/api_signature",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Simple HMAC-SHA1 authentication via headers, port of https://github.com/psyipm/api_signature",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
