@@ -16,10 +16,10 @@ export interface SignerOptions {
 }
 
 export interface Signature {
-  header?: string,
-  content_sha256?: string,
-  string_to_sign?: string,
-  canonical_request?: string,
-  signature?: string,
-  headers: OutgoingHttpHeaders
+  header?: string;
+  content_sha256?: string;
+  string_to_sign?: string;
+  canonical_request?: string;
+  signature?: string;
+  headers: OutgoingHttpHeaders;
 }

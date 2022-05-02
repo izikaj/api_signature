@@ -40,11 +40,11 @@ export class Signer {
       string_to_sign: sts,
       canonical_request: creq,
       signature: sig,
-      headers: {}
+      headers: {},
     };
   }
 
-  private get service() : string {
+  private get service(): string {
     return this.options.service || 'web';
   }
 
