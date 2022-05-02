@@ -77,10 +77,10 @@ export class Builder {
       .join(Builder.SPLITTER);
   }
 
-  canonicalRequest(path: string): string {
+  canonicalRequest(path?: string): string {
     return [
       this.settings.method,
-      path,
+      path || this.path,
       this.search,
       this.canonicalHeaders() + Builder.SPLITTER,
       this.signedHeadersNames,
