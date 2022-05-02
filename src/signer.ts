@@ -1,6 +1,6 @@
 import { Builder } from './builder';
 import { normalizePath, hmac, hexhmac, hexdigest } from './utils';
-import { BuilderSettings, SignerOptions } from './types';
+import { Signature, BuilderSettings, SignerOptions } from './types';
 
 export class Signer {
   static readonly NAME = 'API-HMAC-SHA256';
@@ -11,7 +11,7 @@ export class Signer {
     private readonly options: SignerOptions = {},
   ) {}
 
-  signRequest(request: BuilderSettings): any {
+  signRequest(request: BuilderSettings): Signature {
     const builder = new Builder(request);
     const sigHeaders = builder.buildSignHeaders(this.options.applyChecksumHeader);
     const data = this.buildSignature(builder);
@@ -26,7 +26,7 @@ export class Signer {
     };
   }
 
-  private buildSignature(builder: Builder): any {
+  private buildSignature(builder: Builder): Signature {
     const path = normalizePath(builder.path, this.options.uriEscapePath);
 
     // compute signature parts
@@ -40,12 +40,17 @@ export class Signer {
       string_to_sign: sts,
       canonical_request: creq,
       signature: sig,
+      headers: {}
     };
+  }
+
+  private get service() : string {
+    return this.options.service || 'web';
   }
 
   private signature(date: string, target: string): string {
     const kDate = hmac(`API${this.apiSecret}`, date);
-    const kService = hmac(kDate, this.options.service || 'web');
+    const kService = hmac(kDate, this.service);
     const kCredentials = hmac(kService, 'api_request');
     return hexhmac(kCredentials, target);
   }
@@ -55,7 +60,7 @@ export class Signer {
   }
 
   private credential(date: string): string {
-    return `${this.apiKey}/${date}/${this.options.service || 'web'}/api_request`;
+    return `${this.apiKey}/${date}/${this.service}/api_request`;
   }
 
   private buildSignatureHeader(builder: Builder, signature: string): string {
